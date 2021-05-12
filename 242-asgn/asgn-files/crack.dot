@@ -1,0 +1,22 @@
+digraph tree {
+node [shape = Mrecord, penwidth = 2];
+"somnambulist"[label="{<f0>somnambulist:1|{<f1>|<f2>}}"color=black];
+"serendipity"[label="{<f0>serendipity:1|{<f1>|<f2>}}"color=black];
+"limerence"[label="{<f0>limerence:1|{<f1>|<f2>}}"color=black];
+"bombinate"[label="{<f0>bombinate:1|{<f1>|<f2>}}"color=black];
+"ethereal"[label="{<f0>ethereal:1|{<f1>|<f2>}}"color=black];
+"ephemeral"[label="{<f0>ephemeral:1|{<f1>|<f2>}}"color=black];
+"ethereal":f1 -> "ephemeral":f0;
+"illicit"[label="{<f0>illicit:1|{<f1>|<f2>}}"color=black];
+"ethereal":f2 -> "illicit":f0;
+"bombinate":f2 -> "ethereal":f0;
+"limerence":f1 -> "bombinate":f0;
+"phosphenes"[label="{<f0>phosphenes:1|{<f1>|<f2>}}"color=black];
+"oblivion"[label="{<f0>oblivion:1|{<f1>|<f2>}}"color=black];
+"phosphenes":f1 -> "oblivion":f0;
+"limerence":f2 -> "phosphenes":f0;
+"serendipity":f1 -> "limerence":f0;
+"somnambulist":f1 -> "serendipity":f0;
+"sonorous"[label="{<f0>sonorous:1|{<f1>|<f2>}}"color=black];
+"somnambulist":f2 -> "sonorous":f0;
+}
