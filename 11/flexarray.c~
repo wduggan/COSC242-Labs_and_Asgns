@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "flexarray.h"
+
+struct flexarrayrec {
+    int capacity;
+    int itemcount;
+    int *items;
+};
+
+void *emalloc(size_t s) {
+    void *result = malloc(s);
+    if (NULL == result) {
+        fprintf(stderr, "Memory allocation failed!\n");
+        exit(EXIT_FAILURE);
+    }
+    return result;
+}
+
+/* erealloc is the exact same as emalloc except you add int *p as the first parameter before size_t s, and also *result = realloc(p, s) */
+void *erealloc(int *p, size_t s) {
+    void *result = realloc(p, s);
+    if (NULL == result) {
+        fprintf(stderr, "Memory reallocation failed!\n");
+        exit(EXIT_FAILURE);
+    }
+    return result;
+}
+
+flexarray flexarray_new() {
+    flexarray result = emalloc(sizeof *result);
+    result->capacity = 2;
+    result->itemcount = 0;
+    result->items = emalloc(result->capacity * sizeof result->items[0]);
+    return result;
+}
+
+void flexarray_append(flexarray f, int num) {
+    if (f->itemcount == f->capacity) {
+        /* do the old "double the capacity" trick */
+        f->capacity += f->capacity;
+        f->items = erealloc(f->items, f->capacity * sizeof f->items[0]);
+    }
+    /* insert the item in the last free space */
+    f->items[f->itemcount++] = num;
+}
+void flexarray_print(flexarray f) {
+    /* a "for" loop to print out each cell of f->items */
+    int i;
+    for (i = 0; i < f->itemcount; i++){
+        printf("%d\n", f->items[i]);
+    }
+}
+void flexarray_print_stderr(flexarray f) {
+    /* a "for" loop to print out each cell of f->items */
+    int i;
+    for (i = 0; i < f->itemcount; i++){
+        fprintf(stderr, "%d\n", f->items[i]);
+    }
+}
+void flexarray_sort(flexarray f) {
+    /* Insertion sort, the array is 'items' and the number of items is item count*/
+    int i, p, key;
+
+    for (p = 1; p < f->itemcount; p++) {
+        key = f->items[p];
+        i = p-1;
+        
+        while (i >= 0 && f->items[i] > key){
+            f->items[i+1] = f->items[i];
+            i--;
+        }
+        f->items[i + 1] = key;
+        
+        if (p == f->itemcount / 2 - 1) {
+            flexarray_print_stderr(f);
+        }
+    }
+}
+
+void flexarray_free(flexarray f) {
+    /* free the memory associated with the flexarray */
+    free(f->items);
+    free(f);
+}

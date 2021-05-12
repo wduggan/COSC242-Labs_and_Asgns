@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main(void) {
+    double s1, s2, s3;
+    int n;
+    double result;
+    double biggest;
+    double temp = 0;
+    int winnerID;
+
+    printf("Enter competitor's registration number and the three judge's scores\n");
+    fflush(stdout);
+
+    while (4 == scanf("%d%lg%lg%lg", &n, &s1, &s2, &s3)) {
+        if (s1 < s2 && s1 < s3){
+            result = (s2 + s3)/2;
+            printf("%f\n", result );
+            biggest = result;
+            winnerID = n;
+        } else if (s2 < s1 && s2 < s3){
+            result = (s1 + s3)/2;
+            printf("%f\n", result );
+            biggest = result;
+            winnerID = n;
+        } else {
+            result = (s1 + s2)/2;
+            printf("%f\n", result );
+            biggest = result;
+            winnerID = n;
+        }
+        if (biggest > temp) {
+            printf("The winner is %d%f\n", winnerID, biggest);
+        } else if (biggest < temp) {
+            temp = biggest;
+        }
+
+    }
+    
+    return 0;
+}

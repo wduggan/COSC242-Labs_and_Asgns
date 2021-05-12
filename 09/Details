@@ -1,0 +1,14 @@
+Here is a useful principle that may help you write better code: “where possible, keep housekeeping out-of-sight.” In the code above 9.2, we checked the return values from malloc and realloc to make sure we hadn’t run out of memory. This distracts us from the main purpose of the program, and makes for
+some unnecessary reading for someone else who may be trying to understand the program.
+
+flexarray.c is what the new program should look like, where we separate our code into different modules (or files) to avoid code reuse/duplication.
+What we are doing is reading in a header file (mylib.h) that contains function prototypes for emalloc and erealloc.
+
+But how does the program know what to DO when emalloc or erealloc is called? Well, we have a specification file (that’s mylib.h) so what we need now is an implementation file (mylib.c).
+
+In flexarray.c, The “flexible array” is looking after its own capacity, itemcount and storage. Since these types are int, int, and int *, we must be talking about our flexarray being some sort of struct.
+Since the flexarray is being passed as a parameter to flexarray-manipulating functions, and since we don’t like passing structs around if we can help it, our flexarray type is in fact a pointer to a struct. Here is the flexarray.h file:
+
+
+
+
